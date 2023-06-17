@@ -65,42 +65,8 @@ public class PointService {
         return mapper.toDto(pointOfInterestSaved);
     }
 
-//    public List<PointResponseDTO> findNearestPoint( double x, double y){
-//        var z = mapper.toDto(repo.findNearestPoint(y,x));
-//        return  null;
-//    }
-
     public List<PointResponseDTO> findAround(double lat, double lon, double distanceM){
         Point p = factory.createPoint(new Coordinate(lon, lat));
         return mapper.toDto(repo.findNearWithinDistance(p, distanceM));
     }
-
-//
-
-//
-
-//
-//    private Poi setPoi(PointOfInterest pointOfInterest) {
-//        Poi poi = new Poi();
-//        poi.setGeom(new OurGeom(pointOfInterest.getGeom().getInteriorPoint().getCoordinate().x, pointOfInterest.getGeom().getInteriorPoint().getCoordinate().y));
-//        poi.setName(pointOfInterest.getName());
-//        poi.setId(pointOfInterest.getId());
-//        return poi;
-//    }
-//
-//    private static Geometry wktToGeometry(String wellKnownText) {
-//        Geometry geometry = null;
-//
-//        try {
-//            geometry = wktReader.read(wellKnownText);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("###geometry :"+geometry);
-//        return geometry;
-//    }
-//    public static Geometry parseLocation(double x,double y) {
-//        return PointService.wktToGeometry(String.format("POINT (%s %s)",x,y));
-//    }
-
 }
