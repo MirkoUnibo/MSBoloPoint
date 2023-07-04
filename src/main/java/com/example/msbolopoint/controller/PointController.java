@@ -35,7 +35,7 @@ public class PointController {
     }
 
     @PostMapping(path = "/delete-poi/{idPoint}")
-    public ResponseEntity delete(@PathVariable("idPoint") UUID idPoint) throws Exception {
+    public ResponseEntity<?> delete(@PathVariable("idPoint") UUID idPoint) throws Exception {
         PointResponseDTO poi = service.deletePoi(idPoint);
         if (poi == null) {
             throw new Exception("POI non cancellato");
@@ -53,11 +53,31 @@ public class PointController {
     }
 
     @GetMapping("/findAround")
-    public ResponseEntity<List<PointResponseDTO>> findAround(double lat, double lon, double distanceM) {
-        var pointsAround = service.findAround(lat, lon, distanceM);
+    public ResponseEntity<List<PointResponseDTO>> findAround(
+            @RequestParam  double lat,
+            @RequestParam  double lon,
+            @RequestParam double distanceM,
+            @RequestParam int rank,
+            @RequestParam String type) {
+        var pointsAround = service.findAround(lat, lon, distanceM, rank, type);
         if(pointsAround.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(pointsAround, HttpStatus.FOUND);
     }
+
+    @GetMapping("/findNearest")
+    public ResponseEntity<PointResponseDTO> findnearest(
+            @RequestParam  double lat,
+            @RequestParam  double lon,
+            @RequestParam int rank,
+            @RequestParam String type
+    ) {
+        var pointsNearest = service.findNearest(lat, lon, rank, type);
+        if(pointsNearest == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(pointsNearest, HttpStatus.FOUND);
+    }
+
 }

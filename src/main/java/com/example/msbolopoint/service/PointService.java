@@ -65,8 +65,14 @@ public class PointService {
         return mapper.toDto(pointOfInterestSaved);
     }
 
-    public List<PointResponseDTO> findAround(double lat, double lon, double distanceM){
+    public List<PointResponseDTO> findAround(double lat, double lon, double distanceM, int rank, String type){
         Point p = factory.createPoint(new Coordinate(lon, lat));
-        return mapper.toDto(repo.findNearWithinDistance(p, distanceM));
+        return mapper.toDto(repo.findNearWithinDistance(p, distanceM, rank, type));
+    }
+
+    public PointResponseDTO findNearest(double lat, double lon, int rank, String type){
+        Point p = factory.createPoint(new Coordinate(lon, lat));
+        var z = repo.findNearPoint(p, rank, type);
+        return mapper.toDto(z);
     }
 }
