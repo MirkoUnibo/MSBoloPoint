@@ -22,7 +22,7 @@ public class PointController {
         if(poiList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(poiList, HttpStatus.FOUND);
+        return new ResponseEntity<>(poiList, HttpStatus.OK);
     }
 
     @GetMapping("/{idPoint}")
@@ -31,7 +31,7 @@ public class PointController {
         if(point == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(point, HttpStatus.FOUND);
+        return new ResponseEntity<>(point, HttpStatus.OK);
     }
 
     @PostMapping(path = "/delete-poi/{idPoint}")
@@ -63,7 +63,7 @@ public class PointController {
         if(pointsAround.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(pointsAround, HttpStatus.FOUND);
+        return new ResponseEntity<>(pointsAround, HttpStatus.OK);
     }
 
     @GetMapping("/findNearest")
@@ -77,7 +77,7 @@ public class PointController {
         if(pointsNearest == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(pointsNearest, HttpStatus.FOUND);
+        return new ResponseEntity<>(pointsNearest, HttpStatus.OK);
     }
 
 }
