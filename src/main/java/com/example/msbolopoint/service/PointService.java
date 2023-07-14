@@ -57,8 +57,8 @@ public class PointService {
         newPoi.setName(jsonStr.getString("name"));
         newPoi.setRank(jsonStr.getInt("rank"));
         newPoi.setType(jsonStr.getString("type"));
-        double x = jsonStr.getJSONArray("geom").getDouble(0);
-        double y = jsonStr.getJSONArray("geom").getDouble(1);
+        double x = jsonStr.getJSONArray("geom").getDouble(1);
+        double y = jsonStr.getJSONArray("geom").getDouble(0);
         Point point = gf.createPoint(new Coordinate(x, y));
         newPoi.setGeom(point);
         PointOfInterest pointOfInterestSaved = repo.save(newPoi);
