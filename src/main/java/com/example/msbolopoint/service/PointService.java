@@ -40,15 +40,17 @@ public class PointService {
         return pointOfInterest.map(mapper::toDto).orElse(null);
     }
 
-        public PointResponseDTO deletePoi(UUID idPoi) throws JSONException {
+    public List deletePoi(UUID idPoi) throws JSONException {
         repo.deleteById(idPoi);
-        return findById(idPoi);
+        return findAll();
     }
     public PointResponseDTO insertPoi(String jsonPoi) throws JSONException {
 
         var objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JtsModule());
         JSONObject jsonStr = new JSONObject (jsonPoi);
+        jsonStr = jsonStr.getJSONObject("jsonPoint");
+        //jsonStr = jsonStr["jsonPoiInsert"];
         GeometryFactory gf = new GeometryFactory();
 
 

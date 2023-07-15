@@ -2,6 +2,7 @@ package com.example.msbolopoint.controller;
 
 import com.example.msbolopoint.dto.PointResponseDTO;
 import com.example.msbolopoint.service.PointService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,8 @@ public class PointController {
 
     @PostMapping(path = "/delete-poi/{idPoint}")
     public ResponseEntity<?> delete(@PathVariable("idPoint") UUID idPoint) throws Exception {
-        PointResponseDTO poi = service.deletePoi(idPoint);
+        System.out.println(idPoint);
+        List poi = service.deletePoi(idPoint);
         if (poi == null) {
             throw new Exception("POI non cancellato");
         }
@@ -45,6 +47,7 @@ public class PointController {
 
     @PostMapping(path = "/insert-poi")
     public ResponseEntity<PointResponseDTO> create(@RequestBody String jsonPoiInsert) throws Exception {
+        System. out. println(jsonPoiInsert);
         PointResponseDTO poi = service.insertPoi(jsonPoiInsert);
         if (poi == null) {
             throw new Exception("POI non inserito");
