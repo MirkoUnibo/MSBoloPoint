@@ -40,7 +40,7 @@ public class PointController {
         if (poi == null) {
             throw new Exception("POI non cancellato");
         }
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(path = "/insert-poi")
@@ -49,7 +49,16 @@ public class PointController {
         if (poi == null) {
             throw new Exception("POI non inserito");
         }
-        return new ResponseEntity<>(poi, HttpStatus.CREATED);
+        return new ResponseEntity<>(poi, HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/update-poi/{idPoint}")
+    public ResponseEntity<PointResponseDTO> update(@PathVariable("idPoint")UUID idPoint, @RequestBody String jsonPoiInsert) throws Exception {
+        PointResponseDTO poi = service.updatePoi(idPoint, jsonPoiInsert);
+        if (poi == null) {
+            throw new Exception("POI non inserito");
+        }
+        return new ResponseEntity<>(poi, HttpStatus.OK);
     }
 
     @GetMapping("/findAround")

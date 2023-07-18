@@ -54,6 +54,28 @@ public class PointService {
 
         PointOfInterest newPoi = new PointOfInterest();
         newPoi.setId(UUID.randomUUID());
+        return setPoi(jsonStr, gf, newPoi);
+    }
+
+    public PointResponseDTO updatePoi(UUID idPoi, String jsonPoi) throws Exception {
+
+        Optional<PointOfInterest> pointOfInterest = repo.findById(idPoi);
+        if(pointOfInterest.isEmpty()){
+            throw new Exception("POI non esiste");
+        }
+
+        var objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JtsModule());
+        JSONObject jsonStr = new JSONObject (jsonPoi);
+        GeometryFactory gf = new GeometryFactory();
+
+
+        PointOfInterest newPoi = new PointOfInterest();
+        newPoi.setId(idPoi);
+        return setPoi(jsonStr, gf, newPoi);
+    }
+
+    private PointResponseDTO setPoi(JSONObject jsonStr, GeometryFactory gf, PointOfInterest newPoi) {
         newPoi.setName(jsonStr.getString("name"));
         newPoi.setRank(jsonStr.getInt("rank"));
         newPoi.setType(jsonStr.getString("type"));
