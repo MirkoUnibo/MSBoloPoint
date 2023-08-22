@@ -14,13 +14,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api")
 public class LoginController {
@@ -46,11 +43,11 @@ public class LoginController {
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
         // checking for username exists in a database
         if(userRepository.existsByUserName(signUpDto.getUsername())){
-            return new ResponseEntity<>("Username is already exist!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Username already exists!", HttpStatus.BAD_REQUEST);
         }
         // checking for email exists in a database
         if(userRepository.existsByEmail(signUpDto.getEmail())){
-            return new ResponseEntity<>("Email is already exist!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Email already exists!", HttpStatus.BAD_REQUEST);
         }
         // creating user object
         User user = new User();

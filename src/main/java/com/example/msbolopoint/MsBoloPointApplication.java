@@ -32,7 +32,7 @@ public class MsBoloPointApplication {
         registration.setOrder(1);
         return registration;
     }
-    @Bean
+    /*@Bean
     public CommandLineRunner demo(RoleRepository roleRepo) {
         return (args) -> {
             Role role=new Role();
@@ -43,5 +43,5 @@ public class MsBoloPointApplication {
             role.setName("ROLE_USER");
             roleRepo.save(role);
         };
-    }
+    }*/
 }
