@@ -16,10 +16,12 @@ import org.locationtech.jts.geom.PrecisionModel;
 import org.n52.jackson.datatype.jts.JtsModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 
 @Service
 @AllArgsConstructor

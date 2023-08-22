@@ -16,6 +16,7 @@ public class PointController {
     @Autowired
     private PointService service;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/all")
 
     public ResponseEntity<List<PointResponseDTO>> getAllPoint() {
@@ -26,6 +27,7 @@ public class PointController {
         return new ResponseEntity<>(poiList, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{idPoint}")
 
     public ResponseEntity<PointResponseDTO> getPointById(@PathVariable("idPoint") UUID idPoint) {
@@ -35,7 +37,7 @@ public class PointController {
         }
         return new ResponseEntity<>(point, HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/delete-poi/{idPoint}")
 
     public ResponseEntity<?> delete(@PathVariable("idPoint") UUID idPoint) throws Exception {
@@ -46,7 +48,7 @@ public class PointController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/insert-poi")
 
     public ResponseEntity<PointResponseDTO> create(@RequestBody String jsonPoiInsert) throws Exception {
@@ -57,7 +59,7 @@ public class PointController {
         }
         return new ResponseEntity<>(poi, HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping(path = "/update-poi/{idPoint}")
     public ResponseEntity<PointResponseDTO> update(@PathVariable("idPoint")UUID idPoint, @RequestBody String jsonPoiInsert) throws Exception {
         PointResponseDTO poi = service.updatePoi(idPoint, jsonPoiInsert);
@@ -66,7 +68,7 @@ public class PointController {
         }
         return new ResponseEntity<>(poi, HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/findAround")
 
     public ResponseEntity<List<PointResponseDTO>> findAround(
@@ -81,7 +83,7 @@ public class PointController {
         }
         return new ResponseEntity<>(pointsAround, HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/findNearest")
 
     public ResponseEntity<PointResponseDTO> findnearest(
