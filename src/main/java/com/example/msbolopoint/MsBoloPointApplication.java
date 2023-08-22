@@ -2,6 +2,9 @@ package com.example.msbolopoint;
 
 import com.bedatadriven.jackson.datatype.jts.JtsModule;
 import com.example.msbolopoint.config.CorsFilter;
+import com.example.msbolopoint.model.Role;
+import com.example.msbolopoint.repo.RoleRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -27,5 +30,17 @@ public class MsBoloPointApplication {
         registration.setName("corsFilter");
         registration.setOrder(1);
         return registration;
+    }
+    @Bean
+    public CommandLineRunner demo(RoleRepository roleRepo) {
+        return (args) -> {
+            Role role=new Role();
+            role.setName("ROLE_ADMIN");
+            roleRepo.save(role);
+
+            role=new Role();
+            role.setName("ROLE_USER");
+            roleRepo.save(role);
+        };
     }
 }
