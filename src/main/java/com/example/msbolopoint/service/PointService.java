@@ -45,7 +45,6 @@ public class PointService {
         return findAll();
     }
     public PointResponseDTO insertPoi(String jsonPoi) throws JSONException {
-
         var objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JtsModule());
         JSONObject jsonStr = new JSONObject (jsonPoi);
@@ -67,12 +66,13 @@ public class PointService {
         return mapper.toDto(pointOfInterestSaved);
     }
 
-    public List<PointResponseDTO> findAround(double lat, double lon, double distanceM, int rank, String type){
+    public List<PointResponseDTO> findNearest(double lat, double lon, double distanceM, int rank, String type){
+        System.out.println("findaround");
         Point p = factory.createPoint(new Coordinate(lon, lat));
         return mapper.toDto(repo.findNearWithinDistance(p, distanceM, rank, type));
     }
 
-    public PointResponseDTO findNearest(double lat, double lon, int rank, String type){
+    public PointResponseDTO findAround(double lat, double lon, int rank, String type){
         Point p = factory.createPoint(new Coordinate(lon, lat));
         var z = repo.findNearPoint(p, rank, type);
         return mapper.toDto(z);

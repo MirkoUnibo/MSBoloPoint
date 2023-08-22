@@ -25,6 +25,7 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+
 logging:
   level:
     org.hibernate.type.descriptor.sql: trace

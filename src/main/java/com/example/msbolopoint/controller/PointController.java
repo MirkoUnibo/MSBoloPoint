@@ -2,7 +2,6 @@ package com.example.msbolopoint.controller;
 
 import com.example.msbolopoint.dto.PointResponseDTO;
 import com.example.msbolopoint.service.PointService;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +17,7 @@ public class PointController {
     private PointService service;
 
     @GetMapping("/all")
+
     public ResponseEntity<List<PointResponseDTO>> getAllPoint() {
         var poiList = service.findAll();
         if(poiList.isEmpty()){
@@ -27,6 +27,7 @@ public class PointController {
     }
 
     @GetMapping("/{idPoint}")
+
     public ResponseEntity<PointResponseDTO> getPointById(@PathVariable("idPoint") UUID idPoint) {
         PointResponseDTO point = service.findById(idPoint);
         if(point == null){
@@ -36,6 +37,7 @@ public class PointController {
     }
 
     @PostMapping(path = "/delete-poi/{idPoint}")
+
     public ResponseEntity<?> delete(@PathVariable("idPoint") UUID idPoint) throws Exception {
         System.out.println(idPoint);
         List poi = service.deletePoi(idPoint);
@@ -46,6 +48,7 @@ public class PointController {
     }
 
     @PostMapping(path = "/insert-poi")
+
     public ResponseEntity<PointResponseDTO> create(@RequestBody String jsonPoiInsert) throws Exception {
         System. out. println(jsonPoiInsert);
         PointResponseDTO poi = service.insertPoi(jsonPoiInsert);
@@ -55,28 +58,30 @@ public class PointController {
         return new ResponseEntity<>(poi, HttpStatus.CREATED);
     }
 
-    @GetMapping("/findAround")
+    @GetMapping(path = "/findAround")
+
     public ResponseEntity<List<PointResponseDTO>> findAround(
             @RequestParam  double lat,
             @RequestParam  double lon,
             @RequestParam double distanceM,
             @RequestParam int rank,
             @RequestParam String type) {
-        var pointsAround = service.findAround(lat, lon, distanceM, rank, type);
+        var pointsAround = service.findNearest(lat, lon, distanceM, rank, type);
         if(pointsAround.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(pointsAround, HttpStatus.OK);
     }
 
-    @GetMapping("/findNearest")
+    @GetMapping(path = "/findNearest")
+
     public ResponseEntity<PointResponseDTO> findnearest(
             @RequestParam  double lat,
             @RequestParam  double lon,
             @RequestParam int rank,
             @RequestParam String type
     ) {
-        var pointsNearest = service.findNearest(lat, lon, rank, type);
+        var pointsNearest = service.findAround(lat, lon, rank, type);
         if(pointsNearest == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
