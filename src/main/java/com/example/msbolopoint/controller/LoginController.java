@@ -1,6 +1,7 @@
 package com.example.msbolopoint.controller;
 
 import com.example.msbolopoint.dto.LoginDto;
+import com.example.msbolopoint.dto.LoginResponseDto;
 import com.example.msbolopoint.dto.SignUpDto;
 import com.example.msbolopoint.model.Role;
 import com.example.msbolopoint.model.User;
@@ -16,7 +17,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api")
@@ -31,11 +35,23 @@ public class LoginController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User login successfully!...", HttpStatus.OK);
+    public ResponseEntity<LoginResponseDto> authenticateUser(@RequestBody LoginDto loginDto) {
+        Authentication authentication = null;
+        LoginResponseDto loginResponseDto = new LoginResponseDto();
+        try{
+            authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            List<String> strings = new ArrayList<>();
+            authentication.getAuthorities().forEach(grantedAuthority -> strings.add(grantedAuthority.getAuthority()));
+            loginResponseDto.setRuolo(strings.get(0));
+            loginResponseDto.setMessaggio("User login successfully!...");
+            return new ResponseEntity<>(loginResponseDto, HttpStatus.OK);
+        }catch (Exception e){
+            loginResponseDto.setRuolo(null);
+            loginResponseDto.setMessaggio("User login unsuccessful!...");
+            return new ResponseEntity<>(loginResponseDto, HttpStatus.UNAUTHORIZED);
+        }
     }
 
 
