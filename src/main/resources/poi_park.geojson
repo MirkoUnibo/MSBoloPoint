@@ -1,0 +1,117 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "park",
+        "id" : "ce9f6772-419a-11ee-be56-0242ac120002",
+        "name": "Giardini Margherita",
+        "rank" : 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.353597640991211,
+          44.482177518841205
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "park",
+        "id" : "ce9f6cd6-419a-11ee-be56-0242ac120002",
+        "name": "Villa Angeletti",
+        "rank" : 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.332569122314453,
+          44.51180893396823
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "park",
+        "id" : "ce9f6e7a-419a-11ee-be56-0242ac120002",
+        "name": "Arena Parco Nord",
+        "rank" : 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.368961334228516,
+          44.52288623521493
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "park",
+        "id" : "ce9f7032-419a-11ee-be56-0242ac120002",
+        "name": "Parco Della Montagnola",
+        "rank" : 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.346559524536133,
+          44.50274968624234
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "park",
+        "id" : "ce9f71e0-419a-11ee-be56-0242ac120002",
+        "name": "Parco Villa Ghigi",
+        "rank" : 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.327805519104004,
+          44.476818992627955
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "park",
+        "id" : "ce9f738e-419a-11ee-be56-0242ac120002",
+        "name": "Parco Talon",
+        "rank" : 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.297851333618164,
+          44.46674363106506
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+       "type": "park",
+       "id" : "ce9f7866-419a-11ee-be56-0242ac120002",
+        "name": "Parco dei Cedri",
+        "rank" : 0
+        },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.397843360900879,
+          44.47028092421102
+        ]
+      }
+    }
+  ]
+}

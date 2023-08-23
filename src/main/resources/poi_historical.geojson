@@ -1,0 +1,69 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "historical building",
+        "id" : "a3995b64-419a-11ee-be56-0242ac120002",
+        "name": "Palazzo Re Enzo",
+        "rank": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.343083381652832,
+          44.49433189374523
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "historical building",
+        "id" : "a3995e66-419a-11ee-be56-0242ac120002",
+        "name": "Chiesa di Santo Stefano",
+        "rank": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.34913444519043,
+          44.491607329696045
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "historical building",
+        "id" : "a3995fba-419a-11ee-be56-0242ac120002",
+        "name": "Santuario di San Luca",
+        "rank": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.297721862792969,
+          44.47960548767628
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { 
+        "type": "historical building",
+        "id" : "ce9f5a34-419a-11ee-be56-0242ac120002",
+        "name": "Palazzo Poggi",
+        "rank": 0
+        },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.352481842041016,
+          44.49662777585759
+        ]
+      }
+    }
+  ]
+}

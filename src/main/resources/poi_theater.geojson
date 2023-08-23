@@ -1,0 +1,101 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "theater",
+        "id" : "ce9f7a28-419a-11ee-be56-0242ac120002",
+        "name": "Teatro di Villa Aldrovandi",
+        "rank" : 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.369948387145996,
+          44.46937748011179
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "theater",
+        "id" : "ce9f7be0-419a-11ee-be56-0242ac120002",
+        "name": "Teatro Europa",
+        "rank" : 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.363210678100586,
+          44.5113804877569
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "theater",
+        "id" : "ce9f7d70-419a-11ee-be56-0242ac120002",
+        "name": "Teatro Duse",
+        "rank" : 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.348447799682617,
+          44.488622408371114
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "theater",
+        "id" : "ce9f7f0a-419a-11ee-be56-0242ac120002",
+        "name": "Teatro Arena Del Sole",
+        "rank" : 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.34364128112793,
+          44.49979594473149
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "type": "theater",
+        "id" : "ce9f809a-419a-11ee-be56-0242ac120002",
+        "name": "Teatro Testoni",
+        "rank" : 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.346001625061035,
+          44.50812113310719
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+      "type": "theater",
+      "id" : "ce9f8522-419a-11ee-be56-0242ac120002",
+        "name": "Teatro Delle Celebrazioni",
+        "rank" : 0
+        },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.312828063964844,
+          44.489219404857
+        ]
+      }
+    }
+  ]
+}
