@@ -46,6 +46,7 @@ public class LoginController {
             authentication.getAuthorities().forEach(grantedAuthority -> strings.add(grantedAuthority.getAuthority()));
             loginResponseDto.setRuolo(strings.get(0));
             loginResponseDto.setMessaggio("User login successfully!...");
+            loginResponseDto.setIdUser(userRepository.findByUserNameOrEmail(loginDto.getUsername(), null).getId());
             return new ResponseEntity<>(loginResponseDto, HttpStatus.OK);
         }catch (Exception e){
             loginResponseDto.setRuolo(null);

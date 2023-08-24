@@ -6,4 +6,5 @@ import lombok.Data;
 public class LoginResponseDto {
     private String ruolo;
     private String messaggio;
+    private Integer idUser;
 }
