@@ -21,4 +21,6 @@ public class QuartieriDto {
     private String perimetro;
 
     private Long numPoints;
+
+    private Long suggestions;
 }

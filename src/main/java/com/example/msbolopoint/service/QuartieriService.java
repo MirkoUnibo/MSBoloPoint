@@ -2,6 +2,7 @@ package com.example.msbolopoint.service;
 
 import com.example.msbolopoint.dto.PointResponseDTO;
 import com.example.msbolopoint.dto.QuartieriDto;
+import com.example.msbolopoint.dto.QuartieriNumberPointsDto;
 import com.example.msbolopoint.mapper.PointToPointDTOImpl;
 import com.example.msbolopoint.mapper.PointToPointDTOMapper;
 import com.example.msbolopoint.model.PointOfInterest;
@@ -21,7 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -35,34 +38,34 @@ public class QuartieriService {
 
     public List<QuartieriDto> findAll(){
         var x = repo.findAll();
-        List<QuartieriDto> listaQuartieriResponse = new ArrayList<>();
-        x.forEach(quartiere -> {
-            QuartieriDto quartiereDto = new QuartieriDto();
-            quartiereDto.setId(quartiere.getId());
-            quartiereDto.setNomeQuart(quartiere.getNomequart());
-            quartiereDto.setPerimetro(coordinateTransformation(quartiere.getPerimeter().toString()));
-            listaQuartieriResponse.add(quartiereDto);
-        });
-//        var y = repo.getAllQuartieriWithNumberPoints();
+
+        List<Object> sourceList = repo.getAllQuartieriWithNumberPoints();
+        List<QuartieriDto> targetList =
+                sourceList.stream
+                                ()
+                        .map(sourceObject -> {
+                            QuartieriDto targetObject = new QuartieriDto();
+                            targetObject.setId((UUID) ((Object[])sourceObject)[0]);
+                            targetObject.setNumPoints((Long) ((Object[])sourceObject)[1]);
+                            targetObject.setSuggestions((Long) ((Object[])sourceObject)[2]);
+                            targetObject.setNomeQuart((String) ((Object[])sourceObject)[3]);
+                            targetObject.setPerimetro(coordinateTransformation(((Object[])sourceObject)[4].toString()) );
+                            return targetObject;
+                        })
+                        .toList();
+
+
+        //System.out.println("polease");
+
+
 //        listaQuartieriResponse.forEach(quartiere -> {
-//            y.forEach(numero -> {
-//                if (quartiere.getId() == numero.getId()){
-//                    quartiere.setNumPoints(numero.getNumPoints());
-//                }
-//            });
+//            Long numPoints = numPointsMap.get(quartiere.getId());
+//            if (numPoints != null) {
+//                quartiere.setNumPoints(numPoints);
+//            }
 //        });
-        var y = repo.getAllQuartieriWithNumberPoints();
-        Map<UUID, Long> numPointsMap = new HashMap<>();
 
-        y.forEach(numero -> numPointsMap.put((UUID) ((Object[])numero)[0], (Long) ((Object[])numero)[1]));
-
-        listaQuartieriResponse.forEach(quartiere -> {
-            Long numPoints = numPointsMap.get(quartiere.getId());
-            if (numPoints != null) {
-                quartiere.setNumPoints(numPoints);
-            }
-        });
-        return listaQuartieriResponse;
+        return targetList;
     }
 
     private String coordinateTransformation(String polygonString) {

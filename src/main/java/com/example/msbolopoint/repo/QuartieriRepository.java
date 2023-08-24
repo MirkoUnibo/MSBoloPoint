@@ -19,9 +19,27 @@ public interface
 
 QuartieriRepository extends JpaRepository<Quartieri, UUID> {
 
-    @Query(value = "SELECT q.id, COUNT(p) " +
-            "FROM Quartieri q, Points p " +
-            "WHERE ST_Contains(CAST(CAST(q.perimeter AS geography) as geometry), CAST(CAST(p.geom AS geography) as geometry)) " +
-            "GROUP BY q.id", nativeQuery = true)
+    @Query(value = "SELECT\n" +
+            "    \n" +
+            "q.id\n" +
+            ",\n" +
+            "    COUNT(pp) as num_Points,\n" +
+            "    CAST(sum(pp.suggestion) as BIGINT) as suggestions,\n" +
+            "    q.nomequart as nome_quart,\n" +
+            "    q.perimeter as perimetro\n" +
+            "FROM\n" +
+            "    Quartieri q\n" +
+            "LEFT JOIN\n" +
+            "    (points p inner join point_suggestion ps on \n" +
+            "p.id\n" +
+            " = ps.idpoint) as pp\n" +
+            "    ON ST_Contains(CAST(CAST(q.perimeter AS geography) as geometry), CAST(CAST(pp.geom AS geography) as geometry))\n" +
+            "GROUP BY\n" +
+            "    \n" +
+            "q.id\n" +
+            ",\n" +
+            "    q.nomequart,\n" +
+            "    q.perimeter; ", nativeQuery = true)
     List<Object> getAllQuartieriWithNumberPoints();
+
 }

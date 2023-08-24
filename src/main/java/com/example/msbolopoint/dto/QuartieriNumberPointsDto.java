@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.locationtech.jts.geom.Coordinate;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -16,5 +17,7 @@ public class QuartieriNumberPointsDto {
 
     private UUID id;
 
-    private int numPoints;
+    private Long count;
+
+    private Long suggestions;
 }
