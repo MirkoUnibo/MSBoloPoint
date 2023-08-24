@@ -95,8 +95,7 @@ public class PointService {
         return mapper.toDto(pointOfInterestSaved);
     }
 
-    public List<PointResponseDTO> findNearest(double lat, double lon, double distanceM, int rank, String type, int idUser){
-        System.out.println("findaround");
+    public List<UUID> findNearest(double lat, double lon, double distanceM, int rank, String type, int idUser){
         Point p = factory.createPoint(new Coordinate(lon, lat));
         UserPosition userPosition = new UserPosition();
         userPosition.setIdUser(idUser);
@@ -104,12 +103,17 @@ public class PointService {
         userPosition.setId(UUID.randomUUID());
         userPosition.setDataPosizione(Timestamp.from(Instant.now()));
         userPositionRepository.save(userPosition);
-        List<PointOfInterest> nearWithinDistance = repo.findNearWithinDistance(p, distanceM, rank, type);
-        return mapper.toDto(nearWithinDistance);
+        return repo.findNearWithinDistance(p, distanceM, rank, type);
     }
 
-    public PointResponseDTO findAround(double lat, double lon, int rank, String type){
+    public PointResponseDTO findAround(double lat, double lon, int rank, String type, int idUser){
         Point p = factory.createPoint(new Coordinate(lon, lat));
+        UserPosition userPosition = new UserPosition();
+        userPosition.setIdUser(idUser);
+        userPosition.setPosizione(p);
+        userPosition.setId(UUID.randomUUID());
+        userPosition.setDataPosizione(Timestamp.from(Instant.now()));
+        userPositionRepository.save(userPosition);
         var z = repo.findNearPoint(p, rank, type);
         return mapper.toDto(z);
     }

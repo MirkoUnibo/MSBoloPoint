@@ -71,7 +71,7 @@ public class PointController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/findAround")
 
-    public ResponseEntity<List<PointResponseDTO>> findAround(
+    public ResponseEntity<List<UUID>> findAround(
             @RequestParam  double lat,
             @RequestParam  double lon,
             @RequestParam double distanceM,
@@ -87,13 +87,14 @@ public class PointController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/findNearest")
 
-    public ResponseEntity<PointResponseDTO> findnearest(
+    public ResponseEntity<PointResponseDTO> findNearest(
             @RequestParam  double lat,
             @RequestParam  double lon,
             @RequestParam int rank,
-            @RequestParam String type
+            @RequestParam String type,
+            @RequestParam int idUser
     ) {
-        var pointsNearest = service.findAround(lat, lon, rank, type);
+        var pointsNearest = service.findAround(lat, lon, rank, type, idUser);
         if(pointsNearest == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
