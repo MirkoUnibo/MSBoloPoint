@@ -12,13 +12,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class QuartieriDto {
+public class QuartieriNumberPointsDto {
 
     private UUID id;
 
-    private String nomeQuart;
-
-    private String perimetro;
-
-    private Long numPoints;
+    private int numPoints;
 }

@@ -21,10 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service
@@ -46,7 +43,25 @@ public class QuartieriService {
             quartiereDto.setPerimetro(coordinateTransformation(quartiere.getPerimeter().toString()));
             listaQuartieriResponse.add(quartiereDto);
         });
+//        var y = repo.getAllQuartieriWithNumberPoints();
+//        listaQuartieriResponse.forEach(quartiere -> {
+//            y.forEach(numero -> {
+//                if (quartiere.getId() == numero.getId()){
+//                    quartiere.setNumPoints(numero.getNumPoints());
+//                }
+//            });
+//        });
+        var y = repo.getAllQuartieriWithNumberPoints();
+        Map<UUID, Long> numPointsMap = new HashMap<>();
 
+        y.forEach(numero -> numPointsMap.put((UUID) ((Object[])numero)[0], (Long) ((Object[])numero)[1]));
+
+        listaQuartieriResponse.forEach(quartiere -> {
+            Long numPoints = numPointsMap.get(quartiere.getId());
+            if (numPoints != null) {
+                quartiere.setNumPoints(numPoints);
+            }
+        });
         return listaQuartieriResponse;
     }
 
