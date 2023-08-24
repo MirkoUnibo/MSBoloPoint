@@ -4,8 +4,10 @@ import com.example.msbolopoint.dto.PointResponseDTO;
 import com.example.msbolopoint.mapper.PointToPointDTOImpl;
 import com.example.msbolopoint.mapper.PointToPointDTOMapper;
 import com.example.msbolopoint.model.PointOfInterest;
+import com.example.msbolopoint.model.PointSuggestion;
 import com.example.msbolopoint.model.UserPosition;
 import com.example.msbolopoint.repo.PointRepository;
+import com.example.msbolopoint.repo.PointSuggestionRepository;
 import com.example.msbolopoint.repo.UserPositionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -33,6 +35,8 @@ public class PointService {
     private PointRepository repo;
     @Autowired
     private UserPositionRepository userPositionRepository;
+    @Autowired
+    private PointSuggestionRepository pointSuggestionRepository;
     private final GeometryFactory factory = new GeometryFactory(new PrecisionModel(), 4326);
 
     private final PointToPointDTOMapper mapper = new PointToPointDTOImpl();
@@ -49,6 +53,7 @@ public class PointService {
 
     public List deletePoi(UUID idPoi) throws JSONException {
         repo.deleteById(idPoi);
+        pointSuggestionRepository.deleteById(idPoi);
         return findAll();
     }
     public PointResponseDTO insertPoi(String jsonPoi) throws JSONException {
@@ -56,12 +61,13 @@ public class PointService {
         objectMapper.registerModule(new JtsModule());
         JSONObject jsonStr = new JSONObject (jsonPoi);
         jsonStr = jsonStr.getJSONObject("jsonPoint");
-        //jsonStr = jsonStr["jsonPoiInsert"];
         GeometryFactory gf = new GeometryFactory();
 
 
         PointOfInterest newPoi = new PointOfInterest();
         newPoi.setId(UUID.randomUUID());
+
+        pointSuggestionRepository.save(new PointSuggestion(newPoi.getId(),0L));
         return setPoi(jsonStr, gf, newPoi);
     }
 
@@ -103,7 +109,18 @@ public class PointService {
         userPosition.setId(UUID.randomUUID());
         userPosition.setDataPosizione(Timestamp.from(Instant.now()));
         userPositionRepository.save(userPosition);
-        return repo.findNearWithinDistance(p, distanceM, rank, type);
+
+        List<UUID> nearWithinDistance = repo.findNearWithinDistance(p, distanceM, rank, type);
+
+        List<PointSuggestion> all = pointSuggestionRepository.findAll();
+        all.stream().filter(pointSuggestion -> nearWithinDistance.contains(pointSuggestion.getIdPoint()))
+                .forEach(pointSuggestion -> {
+                    pointSuggestion.setSuggestion(pointSuggestion.getSuggestion()+1);
+                    pointSuggestionRepository.save(pointSuggestion);
+        });
+
+
+        return nearWithinDistance;
     }
 
     public PointResponseDTO findAround(double lat, double lon, int rank, String type, int idUser){
@@ -115,6 +132,12 @@ public class PointService {
         userPosition.setDataPosizione(Timestamp.from(Instant.now()));
         userPositionRepository.save(userPosition);
         var z = repo.findNearPoint(p, rank, type);
+        PointSuggestion pointSuggestion = pointSuggestionRepository.findById(z.getId()).orElse(null);
+        if(pointSuggestion != null){
+            pointSuggestion.setSuggestion(pointSuggestion.getSuggestion()+1);
+            pointSuggestionRepository.save(pointSuggestion);
+        }
+
         return mapper.toDto(z);
     }
 }

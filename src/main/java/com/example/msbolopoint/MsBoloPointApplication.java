@@ -2,13 +2,17 @@ package com.example.msbolopoint;
 
 import com.bedatadriven.jackson.datatype.jts.JtsModule;
 import com.example.msbolopoint.config.CorsFilter;
-import com.example.msbolopoint.model.Role;
-import com.example.msbolopoint.repo.RoleRepository;
+import com.example.msbolopoint.model.PointOfInterest;
+import com.example.msbolopoint.model.PointSuggestion;
+import com.example.msbolopoint.repo.PointRepository;
+import com.example.msbolopoint.repo.PointSuggestionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 
 @SpringBootApplication
@@ -44,4 +48,18 @@ public class MsBoloPointApplication {
             roleRepo.save(role);
         };
     }*/
+
+    @Bean
+    public CommandLineRunner demo(PointSuggestionRepository pointSuggestionRepository, PointRepository pointRepository) {
+        return (args) -> {
+            List<PointOfInterest> allPoint = pointRepository.findAll();
+            allPoint.stream().filter(pointOfInterest -> !pointSuggestionRepository.existsById(pointOfInterest.getId()))
+            .forEach(pointOfInterest -> {
+                PointSuggestion pointSuggestion = new PointSuggestion();
+                pointSuggestion.setIdPoint(pointOfInterest.getId());
+                pointSuggestion.setSuggestion(0L);
+                pointSuggestionRepository.save(pointSuggestion);
+            });
+        };
+    }
 }
