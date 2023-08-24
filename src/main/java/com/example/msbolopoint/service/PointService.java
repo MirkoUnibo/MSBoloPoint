@@ -4,7 +4,9 @@ import com.example.msbolopoint.dto.PointResponseDTO;
 import com.example.msbolopoint.mapper.PointToPointDTOImpl;
 import com.example.msbolopoint.mapper.PointToPointDTOMapper;
 import com.example.msbolopoint.model.PointOfInterest;
+import com.example.msbolopoint.model.UserPosition;
 import com.example.msbolopoint.repo.PointRepository;
+import com.example.msbolopoint.repo.UserPositionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.json.JSONException;
@@ -16,8 +18,9 @@ import org.locationtech.jts.geom.PrecisionModel;
 import org.n52.jackson.datatype.jts.JtsModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,6 +31,8 @@ import java.util.UUID;
 public class PointService {
     @Autowired
     private PointRepository repo;
+    @Autowired
+    private UserPositionRepository userPositionRepository;
     private final GeometryFactory factory = new GeometryFactory(new PrecisionModel(), 4326);
 
     private final PointToPointDTOMapper mapper = new PointToPointDTOImpl();
@@ -90,10 +95,17 @@ public class PointService {
         return mapper.toDto(pointOfInterestSaved);
     }
 
-    public List<PointResponseDTO> findNearest(double lat, double lon, double distanceM, int rank, String type){
+    public List<PointResponseDTO> findNearest(double lat, double lon, double distanceM, int rank, String type, int idUser){
         System.out.println("findaround");
         Point p = factory.createPoint(new Coordinate(lon, lat));
-        return mapper.toDto(repo.findNearWithinDistance(p, distanceM, rank, type));
+        UserPosition userPosition = new UserPosition();
+        userPosition.setIdUser(idUser);
+        userPosition.setPosizione(p);
+        userPosition.setId(UUID.randomUUID());
+        userPosition.setDataPosizione(Timestamp.from(Instant.now()));
+        userPositionRepository.save(userPosition);
+        List<PointOfInterest> nearWithinDistance = repo.findNearWithinDistance(p, distanceM, rank, type);
+        return mapper.toDto(nearWithinDistance);
     }
 
     public PointResponseDTO findAround(double lat, double lon, int rank, String type){

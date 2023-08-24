@@ -76,8 +76,9 @@ public class PointController {
             @RequestParam  double lon,
             @RequestParam double distanceM,
             @RequestParam int rank,
-            @RequestParam String type) {
-        var pointsAround = service.findNearest(lat, lon, distanceM, rank, type);
+            @RequestParam String type,
+            @RequestParam int idUser) {
+        var pointsAround = service.findNearest(lat, lon, distanceM, rank, type, idUser);
         if(pointsAround.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
